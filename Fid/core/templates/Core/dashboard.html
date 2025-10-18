@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fidelización - Dashboard</title>
+</head>
+<body>
+    {% csrf_token %}
+    <h1>Bienvenido, {{ cliente.dni }}</h1>
+    <p>Puntos acumulados: {{ cliente.puntos }}</p>
+
+    <a href="{% url 'cambiar_password' %}">Cambiar contraseña</a> |
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
+
+    <h2>Tabla de puntos (Top 100)</h2>
+    <table border="1">
+        <tr>
+            <th>Posición</th>
+            <th>Teléfono</th>
+            <th>Puntos</th>
+        </tr>
+        {% for c in top_100 %}
+        <tr {% if forloop.first %} style="font-weight:bold; color:green;" {% endif %}>
+            <td>{{ forloop.counter }}</td>
+            <td>****{{ c.telefono|slice:"-4:" }}</td>
+            <td>{{ c.puntos }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

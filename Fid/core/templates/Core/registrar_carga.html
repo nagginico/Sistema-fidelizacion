@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fidelización - Registrar Carga</title>
+</head>
+<body>
+    <h1>Registrar Carga de Combustible</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>DNI del Cliente:</label><br>
+        <input type="text" name="dni" required><br><br>
+
+        <label>Litros cargados:</label><br>
+        <input type="number" name="litros" min="1" required><br><br>
+
+        <button type="submit">Registrar Carga</button>
+    </form>
+    <br>
+    <a href="{% url 'dashboard' %}">Volver al Dashboard</a>
+</body>
+</html>
