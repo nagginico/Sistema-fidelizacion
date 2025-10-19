@@ -1,14 +1,31 @@
-{% extends 'core/base.html' %}
+{% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Iniciar sesión{% endblock %}
 
 {% block content %}
 <h2>Iniciar sesión</h2>
-<form method="post">
+
+{% if mensaje %}
+    <p style="color: red;"><strong>{{ mensaje }}</strong></p>
+{% endif %}
+
+<form method="POST" action="">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.non_field_errors }}
+
+    <label for="id_username">DNI:</label>
+    {{ form.username }}
+
+    <label for="id_password">Contraseña:</label>
+    {{ form.password }}
+
     <button type="submit">Ingresar</button>
 </form>
-<p>¿No tenés cuenta? <a href="{% url 'register' %}">Registrarse</a></p>
+
+<hr>
+
+<p>¿No tenés cuenta?
+    <a href="{% url 'register' %}">Registrate aquí</a>.
+</p>
 {% endblock %}

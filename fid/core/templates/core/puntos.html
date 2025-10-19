@@ -1,10 +1,25 @@
-{% extends 'core/base.html' %}
+{% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}Mis Puntos{% endblock %}
+{% block title %}Mis puntos{% endblock %}
 
 {% block content %}
-<h2>Mis Puntos</h2>
-<p>Total de puntos acumulados: <strong>{{ puntos }}</strong></p>
-<a href="{% url 'perfil' %}">Volver al perfil</a>
+<h2>Mis puntos</h2>
+
+<section>
+    <p><strong>Puntos actuales:</strong> {{ puntos }}</p>
+
+    <p>
+        <em>Recordá:</em> cada 1 litro de combustible cargado equivale a <strong>50 puntos</strong>.
+        Estos puntos te permiten participar en beneficios y premios exclusivos, como tambien en el sorteo actual de una moto al que tenga mas puntos.
+    </p>
+
+    <p>
+        Si querés comparar tu progreso con otros clientes, podés ver la
+        <a href="{% url 'tabla' %}">tabla de posiciones</a>.
+    </p>
+</section>
+
+<hr>
+
 {% endblock %}

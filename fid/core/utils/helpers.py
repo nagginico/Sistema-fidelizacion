@@ -20,18 +20,5 @@ def agregar_puntos(cliente, litros):
     cliente.refresh_from_db()
     return puntos
 
-
-# -------------------------------------------------
-# OBTENER TOP 100 CLIENTES
-# -------------------------------------------------
 def obtener_top_100():
-    """Devuelve los 100 clientes con más puntos, mostrando solo los últimos 4 dígitos del teléfono."""
-    clientes = Cliente.objects.order_by('-puntos')[:100]
-    top = []
-    for c in clientes:
-        telefono_visible = f"****{c.telefono[-4:]}" if len(c.telefono) >= 4 else c.telefono
-        top.append({
-            'telefono': telefono_visible,
-            'puntos': c.puntos,
-        })
-    return top
+    return Cliente.objects.order_by("-puntos")[:100]

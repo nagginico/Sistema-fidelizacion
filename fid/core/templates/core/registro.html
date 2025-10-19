@@ -1,14 +1,32 @@
-{% extends 'core/base.html' %}
+{% extends "core/base.html" %}
 {% load static %}
 
 {% block title %}Registro{% endblock %}
 
 {% block content %}
-<h2>Registro de Cliente</h2>
-<form method="post">
+<h2>Crear cuenta</h2>
+
+<form method="POST" action="">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrarse</button>
+    {{ form.non_field_errors }}
+
+    <label for="id_dni">DNI:</label>
+    {{ form.dni }}
+
+    <label for="id_telefono">Teléfono:</label>
+    {{ form.telefono }}
+
+    <label for="id_password">Contraseña:</label>
+    {{ form.password }}
+
+    <button type="submit">Registrarme</button>
 </form>
-<p>¿Ya tenés cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
+
+<hr>
+
+<p>¿Ya tenés una cuenta?
+    <a href="{% url 'login' %}">Iniciá sesión</a>.
+</p>
+
 {% endblock %}
+

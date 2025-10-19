@@ -1,16 +1,51 @@
-{% extends 'core/base.html' %}
+{% extends "core/base.html" %}
 {% load static %}
 
 {% block title %}Perfil{% endblock %}
 
 {% block content %}
-<h2>Perfil del Cliente</h2>
-<ul>
-    <li>DNI: {{ cliente.dni }}</li>
-    <li>Nombre de usuario: {{ cliente.user.username }}</li>
-    <li>Teléfono: {{ cliente.telefono }}</li>
-    <li>Puntos: {{ cliente.puntos }}</li>
-    <li>Vehículo: {% if cliente.tiene_auto %}Auto{% elif cliente.tiene_moto %}Moto{% else %}No especificado{% endif %}</li>
-</ul>
-<a href="{% url 'cambiar_contrasena' %}">Cambiar contraseña</a>
+<h2>Mi Perfil</h2>
+
+<!-- DATOS PERSONALES -->
+<section>
+    <h3>Datos personales</h3>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <th>DNI</th>
+            <td>{{ cliente.dni }}</td>
+        </tr>
+        <tr>
+            <th>Teléfono</th>
+            <td>{{ cliente.telefono|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ cliente.user.email|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ cliente.user.first_name|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Apellido</th>
+            <td>{{ cliente.user.last_name|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Vehículo</th>
+            <td>
+                {% if cliente.tiene_auto %} Auto {% endif %}
+                {% if cliente.tiene_moto %} Moto {% endif %}
+                {% if not cliente.tiene_auto and not cliente.tiene_moto %} No especificado {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Puntos acumulados</th>
+            <td><strong>{{ cliente.puntos }}</strong></td>
+        </tr>
+    </table>
+</section>
+
+<hr>
+
+
 {% endblock %}

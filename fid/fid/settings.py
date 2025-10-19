@@ -31,8 +31,8 @@ SECRET_KEY = 'django-insecure-)16_$(oqjl-b7v+-!2ckohk35&7m1hl@iy6!z2=jw06-*&ze((
 DEBUG = True
 
 ALLOWED_HOSTS = []
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/perfil/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # Application definition
@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'fid.urls'
