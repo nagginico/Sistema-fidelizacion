@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Cargar Puntos{% endblock %}
+
+{% block content %}
+<h2>Cargar Puntos al Cliente</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="dni">DNI del cliente:</label>
+    <input type="text" name="dni" id="dni" required><br><br>
+
+    <label for="litros">Litros cargados:</label>
+    <input type="number" name="litros" id="litros" step="0.01" required><br><br>
+
+    <button type="submit">Cargar puntos</button>
+</form>
+{% endblock %}

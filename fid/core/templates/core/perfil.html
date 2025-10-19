@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<h2>Perfil del Cliente</h2>
+<ul>
+    <li>DNI: {{ cliente.dni }}</li>
+    <li>Nombre de usuario: {{ cliente.user.username }}</li>
+    <li>Teléfono: {{ cliente.telefono }}</li>
+    <li>Puntos: {{ cliente.puntos }}</li>
+    <li>Vehículo: {% if cliente.tiene_auto %}Auto{% elif cliente.tiene_moto %}Moto{% else %}No especificado{% endif %}</li>
+</ul>
+<a href="{% url 'cambiar_contrasena' %}">Cambiar contraseña</a>
+{% endblock %}

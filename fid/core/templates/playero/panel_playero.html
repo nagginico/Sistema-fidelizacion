@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2>Panel del Playero</h2>
+  <hr>
+
+  <!-- 🔍 Buscar cliente -->
+  <form method="get" class="mb-3 d-flex">
+    <input type="text" name="q" placeholder="Buscar por DNI o nombre" class="form-control me-2" value="{{ query }}">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </form>
+
+  <!-- ➕ Agregar nuevo cliente -->
+  <div class="card mb-4">
+    <div class="card-header fw-bold">Agregar nuevo cliente</div>
+    <div class="card-body">
+      <form method="post" class="row g-2">{% csrf_token %}
+        <input type="hidden" name="agregar_cliente" value="1">
+        <div class="col-md-4">
+          <input type="text" name="dni" placeholder="DNI" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <input type="number" name="puntos" placeholder="Puntos iniciales" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-success w-100" type="submit">Agregar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 🧾 Tabla de clientes -->
+  <table class="table table-bordered table-striped align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Usuario</th>
+        <th>DNI</th>
+        <th>Puntos</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cliente in clientes %}
+      <tr>
+        <td>{{ cliente.user.username }}</td>
+        <td>{{ cliente.dni }}</td>
+        <td>{{ cliente.puntos }}</td>
+        <td class="d-flex gap-2">
+          <!-- Sumar puntos -->
+          <form method="post" class="d-flex">{% csrf_token %}
+            <input type="hidden" name="sumar_puntos" value="1">
+            <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+            <input type="number" name="puntos" class="form-control form-control-sm me-2" placeholder="+" style="width:80px;">
+            <button type="submit" class="btn btn-success btn-sm">Sumar</button>
+          </form>
+
+          <!-- Restar puntos -->
+          <form method="post" class="d-flex">{% csrf_token %}
+            <input type="hidden" name="restar_puntos" value="1">
+            <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+            <input type="number" name="puntos" class="form-control form-control-sm me-2" placeholder="-" style="width:80px;">
+            <button type="submit" class="btn btn-warning btn-sm">Restar</button>
+          </form>
+
+          <!-- Eliminar cliente -->
+          <form method="post">{% csrf_token %}
+            <input type="hidden" name="eliminar_cliente" value="1">
+            <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este cliente?')">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="text-center">No se encontraron clientes.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

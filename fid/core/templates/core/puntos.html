@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Mis Puntos{% endblock %}
+
+{% block content %}
+<h2>Mis Puntos</h2>
+<p>Total de puntos acumulados: <strong>{{ puntos }}</strong></p>
+<a href="{% url 'perfil' %}">Volver al perfil</a>
+{% endblock %}

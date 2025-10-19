@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<h1>Panel Playero</h1>
+
+<div style="display:flex; flex-direction:column; gap:15px; max-width:400px; margin:auto;">
+    <a href="{% url 'cargar_puntos' %}" 
+       style="padding:15px; background-color:#4CAF50; color:white; text-align:center; border-radius:8px; text-decoration:none;">
+       Cargar Puntos
+    </a>
+
+    <a href="{% url 'lista_clientes' %}" 
+       style="padding:15px; background-color:#2196F3; color:white; text-align:center; border-radius:8px; text-decoration:none;">
+       Buscar / Editar Cliente
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Top 100 Clientes{% endblock %}
+
+{% block content %}
+<h2>Top 100 Clientes</h2>
+<table border="1">
+    <tr>
+        <th>Posición</th>
+        <th>Teléfono</th>
+        <th>Puntos</th>
+    </tr>
+    {% for cliente in top_100 %}
+    <tr {% if forloop.first %} style="background-color: gold;" {% endif %}>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.puntos }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'perfil' %}">Volver al perfil</a>
+{% endblock %}

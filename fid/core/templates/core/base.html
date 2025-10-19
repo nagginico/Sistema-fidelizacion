@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Fidelización{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Fidelización</h1>
+        <nav>
+   
+        <a href="{% url 'panel_playero' %}" class="btn btn-primary">Panel Playero</a>
+    
+    {% if user.is_authenticated %}
+        <div class="menu">
+            <a href="{% url 'ver_puntos' %}">Mis Puntos</a>
+            <a href="{% url 'tabla' %}">Tabla</a>
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+        </div>
+    {% else %}
+        <a href="{% url 'login' %}">Iniciar sesión</a>
+    {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Sistema de Fidelización</p>
+    </footer>
+</body>
+</html>
