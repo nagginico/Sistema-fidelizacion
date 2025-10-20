@@ -22,18 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-)16_$(oqjl-b7v+-!2ckohk35&7m1hl@iy6!z2=jw06-*&ze(('
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'clave_insegura_local')
-
+SECRET_KEY = os.environ.get("SECRET_KEY", "clave-insegura-local")
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"]
 
 #DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 # antes de producción exportar DJANGO_SECRET_KEY en las variables de entorno
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"]
+
+LOGOUT_REDIRECT_URL = "/login/"
+LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = '/accounts/login/'
 
 
@@ -50,14 +51,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # pa render
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # pa render
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = 'fid.urls'
@@ -84,14 +85,22 @@ WSGI_APPLICATION = 'fid.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600,
-        ssl_require=False
-    )
-}
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,  # mantiene la conexión viva
+            ssl_require=True,  # Render exige SSL
+        )
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
