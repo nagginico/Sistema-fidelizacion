@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from ..models import Cliente, CargaCombustible
+from django.contrib.auth.models import User
 
 
 
@@ -93,13 +94,14 @@ def panel_playero(request):
         elif accion == "agregar":
             dni = request.POST.get("dni")
             telefono = request.POST.get("telefono", "")
-            if not Cliente.objects.filter(dni=dni).exists():
-                Cliente.objects.create(
-                    user=None, dni=dni, telefono=telefono, puntos=0
-                )
-                messages.success(request, f"Cliente con DNI {dni} agregado.")
-            else:
-                messages.error(request, "Ese cliente ya existe.")
+        if not Cliente.objects.filter(dni=dni).exists():
+            # Crear usuario automáticamente
+            user = User.objects.create_user(username=dni, password=dni)
+            Cliente.objects.create(user=user, dni=dni, telefono=telefono, puntos=0)
+            messages.success(request, f"Cliente con DNI {dni} agregado.")
+        else:
+            messages.error(request, "Ese cliente ya existe.")
+
 
         return redirect("panel_playero")
 

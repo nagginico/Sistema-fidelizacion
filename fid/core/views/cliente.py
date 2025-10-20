@@ -42,7 +42,8 @@ def perfil(request):
 def inicio(request):
     """Página principal visible para todos (logueados o no)."""
     # Mostrar los primeros 10 del ranking
-    top_clientes = Cliente.objects.order_by('-puntos')[:10]
+    top_clientes = Cliente.objects.filter(es_playero=False).order_by("-puntos")
+
     user_cliente = None
     posicion = None
 
