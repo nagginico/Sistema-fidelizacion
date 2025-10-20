@@ -13,8 +13,6 @@
 <section>
     <ul>
         <a href="{% url 'inicio' %}">Inicio</a>
-        <li><a href="{% url 'cambiar_contrasena' %}">Cambiar contraseña</a></li>
-
         {% if cliente.es_playero %}
             <li><a href="{% url 'panel_playero' %}">Ir al Panel del Playero</a></li>
         {% endif %}
