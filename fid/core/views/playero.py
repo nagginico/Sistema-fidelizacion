@@ -70,40 +70,46 @@ def panel_playero(request):
         clientes = Cliente.objects.select_related("user").order_by("dni")
 
     if request.method == "POST":
-        accion = request.POST.get("accion")
         try:
+            accion = request.POST.get("accion")
             cliente_id = request.POST.get("cliente_id")
-            cliente = get_object_or_404(Cliente, id=cliente_id)
-        except Exception:
             cliente = None
 
-        if accion == "sumar" and cliente:
-            puntos = int(request.POST.get("puntos", 0))
-            mensaje = modificar_puntos(cliente, puntos, "sumar", request.user)
-            messages.success(request, mensaje)
+            if cliente_id:
+                cliente = get_object_or_404(Cliente, id=cliente_id)
 
-        elif accion == "restar" and cliente:
-            puntos = int(request.POST.get("puntos", 0))
-            mensaje = modificar_puntos(cliente, puntos, "restar", request.user)
-            messages.warning(request, mensaje)
+            if accion == "sumar" and cliente:
+                puntos = int(request.POST.get("puntos", 0))
+                mensaje = modificar_puntos(cliente, puntos, "sumar", request.user)
+                messages.success(request, mensaje)
 
-        elif accion == "eliminar" and cliente:
-            cliente.delete()
-            messages.info(request, f"Cliente {cliente.dni} eliminado correctamente.")
+            elif accion == "restar" and cliente:
+                puntos = int(request.POST.get("puntos", 0))
+                mensaje = modificar_puntos(cliente, puntos, "restar", request.user)
+                messages.warning(request, mensaje)
 
-        elif accion == "agregar":
-            dni = request.POST.get("dni")
-            telefono = request.POST.get("telefono", "")
-        if not Cliente.objects.filter(dni=dni).exists():
-            # Crear usuario automáticamente
-            user = User.objects.create_user(username=dni, password=dni)
-            Cliente.objects.create(user=user, dni=dni, telefono=telefono, puntos=0)
-            messages.success(request, f"Cliente con DNI {dni} agregado.")
-        else:
-            messages.error(request, "Ese cliente ya existe.")
+            elif accion == "eliminar" and cliente:
+                cliente.delete()
+                messages.info(request, f"Cliente {cliente.dni} eliminado correctamente.")
 
+            elif accion == "agregar":
+                dni = request.POST.get("dni")
+                telefono = request.POST.get("telefono", "")
 
-        return redirect("panel_playero")
+                if not dni:
+                    messages.error(request, "Debe ingresar un DNI.")
+                elif not Cliente.objects.filter(dni=dni).exists():
+                    user = User.objects.create_user(username=dni, password=dni)
+                    Cliente.objects.create(user=user, dni=dni, telefono=telefono, puntos=0)
+                    messages.success(request, f"Cliente con DNI {dni} agregado.")
+                else:
+                    messages.error(request, "Ese cliente ya existe.")
+
+            return redirect("panel_playero")
+
+        except Exception as e:
+            messages.error(request, f"Error del servidor: {str(e)}")
+            return redirect("panel_playero")
 
     context = {
         "clientes": clientes,
