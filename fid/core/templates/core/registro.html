@@ -1,32 +1,18 @@
-{% extends "core/base.html" %}
-{% load static %}
-
-{% block title %}Registro{% endblock %}
-
-{% block content %}
-<h2>Crear cuenta</h2>
-
-<form method="POST" action="">
+<form method="POST">
     {% csrf_token %}
-    {{ form.non_field_errors }}
+    {{ form.dni.label_tag }} {{ form.dni }}
+    {{ form.telefono.label_tag }} {{ form.telefono }}
 
-    <label for="id_dni">DNI:</label>
-    {{ form.dni }}
+    {% if form.password.errors %}
+        {{ form.password.label_tag }} {{ form.password }}
+        {% for error in form.password.errors %}
+            <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+    {% else %}
+        {{ form.password.label_tag }} {{ form.password }}
+    {% endif %}
 
-    <label for="id_telefono">Teléfono:</label>
-    {{ form.telefono }}
-
-    <label for="id_password">Contraseña:</label>
-    {{ form.password }}
-
-    <button type="submit">Registrarme</button>
+    <button type="submit">Registrar / Actualizar</button>
 </form>
 
-<hr>
-
-<p>¿Ya tenés una cuenta?
-    <a href="{% url 'login' %}">Iniciá sesión</a>.
-</p>
-
-{% endblock %}
 

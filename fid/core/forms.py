@@ -6,11 +6,17 @@ from .models import Cliente
 # -------------------------------------------------
 # FORMULARIO DE REGISTRO DE CLIENTE
 # -------------------------------------------------
+from django import forms
+from django.contrib.auth.models import User
+from .models import Cliente
+
 class RegistroClienteForm(forms.ModelForm):
     dni = forms.CharField(max_length=20, required=True, label="DNI")
     telefono = forms.CharField(max_length=20, required=True, label="Teléfono")
     password = forms.CharField(
-        widget=forms.PasswordInput, required=False, label="Contraseña"
+        widget=forms.PasswordInput,
+        required=False,
+        label="Contraseña (solo si ya tenés usuario)"
     )
 
     class Meta:
@@ -21,27 +27,46 @@ class RegistroClienteForm(forms.ModelForm):
         dni = self.cleaned_data["dni"]
         if not dni.isdigit():
             raise forms.ValidationError("El DNI debe contener solo números.")
-        if User.objects.filter(username=dni).exists():
-            raise forms.ValidationError("Ya existe un usuario con este DNI.")
         return dni
 
+    def clean(self):
+        """Verifica si el usuario ya existe y ajusta las validaciones."""
+        cleaned_data = super().clean()
+        dni = cleaned_data.get("dni")
+        password = cleaned_data.get("password")
+
+        if User.objects.filter(username=dni).exists():
+            # Si ya existe → contraseña es obligatoria
+            if not password:
+                self.add_error("password", "Debes ingresar tu nueva contraseña.")
+        return cleaned_data
+
     def save(self, commit=True):
-        """Crea el usuario y el cliente asociado"""
         dni = self.cleaned_data["dni"]
         telefono = self.cleaned_data["telefono"]
-        password = self.cleaned_data["password"] or dni  # si no escribe, usa el DNI
+        password = self.cleaned_data["password"] or dni  # por defecto, usa el DNI
 
-        # Crear usuario (username = dni)
-        user = User.objects.create_user(username=dni, password=password)
-
-        # Crear cliente vinculado
-        cliente = Cliente(user=user, dni=dni, telefono=telefono)
-
-        if commit:
+        if User.objects.filter(username=dni).exists():
+            # Si el usuario ya existe → actualiza contraseña y teléfono
+            user = User.objects.get(username=dni)
+            if self.cleaned_data["password"]:
+                user.set_password(password)
             user.save()
-            cliente.save()
+
+            cliente, _ = Cliente.objects.get_or_create(user=user)
+            cliente.telefono = telefono
+            if commit:
+                cliente.save()
+        else:
+            # Si no existe → crea usuario + cliente nuevo
+            user = User.objects.create_user(username=dni, password=password)
+            cliente = Cliente(user=user, dni=dni, telefono=telefono)
+            if commit:
+                user.save()
+                cliente.save()
 
         return cliente
+
 
 
 # -------------------------------------------------
