@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'clave_insegura_local')
 # antes de producción exportar DJANGO_SECRET_KEY en las variables de entorno
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['https://sistema-fidelizacion-9k8a.onrender.com']
 LOGIN_REDIRECT_URL = '/'
