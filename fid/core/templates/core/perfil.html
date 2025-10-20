@@ -38,6 +38,11 @@
 
     <button type="submit">Actualizar contraseña</button>
 </form>
+{% if form_cambio_pass.errors %}
+    <div style="color:red;">
+        {{ form_cambio_pass.errors }}
+    </div>
+{% endif %}
 <hr>
 
 <h3>Resumen</h3>

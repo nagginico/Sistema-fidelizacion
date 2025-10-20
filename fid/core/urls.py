@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.crud_usuario import login_view, register, logout_view
+from .views.crud_usuario import login_view, register, logout_view, cambiar_contrasena
 from .views.cliente import inicio, perfil
 from .views.playero import panel_playero
 
@@ -8,6 +8,7 @@ urlpatterns = [
     # Página principal (tabla general)
     # -----------------------
     path("", inicio, name="inicio"),
+    path("cambiar-contrasena/", cambiar_contrasena, name="cambiar_contrasena"),
 
     # -----------------------
     # Autenticación

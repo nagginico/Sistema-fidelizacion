@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from ..forms import RegistroClienteForm, LoginForm, CambioPasswordForm
 from ..models import Cliente
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 # --------------------------
@@ -64,17 +65,17 @@ def logout_view(request):
 
 @login_required
 def cambiar_contrasena(request):
-    """Permite cambiar la contraseña del usuario autenticado."""
     if request.method == "POST":
-        form = CambioPasswordForm(user=request.user, data=request.POST)
+        form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Mantiene la sesión activa
-            messages.success(request, "Contraseña cambiada correctamente.")
+            update_session_auth_hash(request, user)  # mantiene la sesión activa
+            messages.success(request, "Tu contraseña fue actualizada correctamente.")
             return redirect("perfil")
         else:
-            messages.error(request, "Revisá los errores del formulario.")
+            messages.error(request, "Por favor corrige los errores en el formulario.")
     else:
-        form = CambioPasswordForm(user=request.user)
-
-    return render(request, "core/cambiar_contrasena.html", {"form": form})
+        form = PasswordChangeForm(request.user)
+    
+    # 🔹 No creamos nueva plantilla, renderizamos dentro del mismo perfil
+    return render(request, "perfil.html", {"form_cambio_pass": form})
