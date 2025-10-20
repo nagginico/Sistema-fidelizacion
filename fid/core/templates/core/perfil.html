@@ -1,51 +1,35 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}Perfil{% endblock %}
+{% block title %}Mi perfil{% endblock %}
 
 {% block content %}
-<h2>Mi Perfil</h2>
+<h2>Mi perfil</h2>
 
-<!-- DATOS PERSONALES -->
-<section>
-    <h3>Datos personales</h3>
-    <table border="1" cellspacing="0" cellpadding="5">
-        <tr>
-            <th>DNI</th>
-            <td>{{ cliente.dni }}</td>
-        </tr>
-        <tr>
-            <th>Teléfono</th>
-            <td>{{ cliente.telefono|default:"-" }}</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>{{ cliente.user.email|default:"-" }}</td>
-        </tr>
-        <tr>
-            <th>Nombre</th>
-            <td>{{ cliente.user.first_name|default:"-" }}</td>
-        </tr>
-        <tr>
-            <th>Apellido</th>
-            <td>{{ cliente.user.last_name|default:"-" }}</td>
-        </tr>
-        <tr>
-            <th>Vehículo</th>
-            <td>
-                {% if cliente.tiene_auto %} Auto {% endif %}
-                {% if cliente.tiene_moto %} Moto {% endif %}
-                {% if not cliente.tiene_auto and not cliente.tiene_moto %} No especificado {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <th>Puntos acumulados</th>
-            <td><strong>{{ cliente.puntos }}</strong></td>
-        </tr>
-    </table>
-</section>
+<form method="POST" action="">
+    {% csrf_token %}
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" value="{{ user.first_name }}">
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" value="{{ user.last_name }}">
+
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" name="telefono" value="{{ cliente.telefono }}">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ user.email }}">
+
+    <button type="submit">Guardar cambios</button>
+</form>
 
 <hr>
 
+<h3>Resumen</h3>
+<p><strong>Puntos acumulados:</strong> {{ cliente.puntos }}</p>
+<p><strong>Posición actual:</strong> {{ posicion }}</p>
+
+<hr>
 
 {% endblock %}

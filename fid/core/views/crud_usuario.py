@@ -30,7 +30,7 @@ def register(request):
 # --------------------------
 
 def login_view(request):
-    next_url = request.GET.get("next")  # ← Detecta si fue redirigido
+    next_url = request.GET.get("next")  # detecta si fue redirigido
     mensaje = None
 
     if next_url:
@@ -42,7 +42,7 @@ def login_view(request):
             user = form.get_user()
             login(request, user)
             messages.success(request, f"Bienvenido {user.username}")
-            return redirect(next_url or "perfil")  # ← si venía redirigido, vuelve ahí
+            return redirect(next_url or "perfil")  # si lo es, va a ese url
     else:
         form = LoginForm()
 

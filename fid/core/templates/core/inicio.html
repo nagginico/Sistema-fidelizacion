@@ -1,44 +1,25 @@
 {% extends "core/base.html" %}
-{% load static %}
-
 {% block title %}Inicio{% endblock %}
-
 {% block content %}
-<h2>Bienvenido al Sistema de Fidelización</h2>
+<h2>Ranking de Puntos</h2>
 
-{% if user.is_authenticated and cliente %}
-    <p><strong>Hola {{ user.username }}</strong></p>
-    <p>Tus puntos actuales: <strong>{{ cliente.puntos }}</strong></p>
-    <p><a href="{% url 'perfil' %}">Ver perfil completo</a></p>
-{% else %}
-    <p>¿Aún no sos parte de nuestro programa?</p>
-    <a href="{% url 'login' %}">Iniciar sesión</a> |
-    <a href="{% url 'register' %}">Registrarse</a>
-{% endif %}
-
-<hr>
-
-<h3>🏆 Ranking de los 10 mejores</h3>
-<table border="1" cellpadding="6" cellspacing="0">
-    <tr>
-        <th>Posición</th>
-        <th>Teléfono</th>
-        <th>Puntos</th>
-    </tr>
+<table border="1" cellpadding="5">
+    <tr><th>Posición</th><th>Usuario</th><th>Puntos</th></tr>
     {% for c in top_clientes %}
-        <tr {% if forloop.first %}style="background-color: #ffd700;"{% endif %}>
-            <td>{{ forloop.counter }}</td>
-            <td>
-                {% if c.telefono|length > 4 %}
-                    ****{{ c.telefono|slice:"-4:" }}
-                {% else %}
-                    {{ c.telefono }}
-                {% endif %}
-            </td>
-            <td>{{ c.puntos }}</td>
-        </tr>
+    <tr {% if user_cliente and c.id == user_cliente.id %}style="background:#dfd;"{% endif %}>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ c.user.username }}</td>
+        <td>{{ c.puntos }}</td>
+    </tr>
     {% empty %}
-        <tr><td colspan="3">No hay clientes aún.</td></tr>
+    <tr><td colspan="3">No hay clientes registrados.</td></tr>
     {% endfor %}
 </table>
+
+{% if not user.is_authenticated %}
+    <p><a href="{% url 'login' %}">Iniciar sesión</a> | <a href="{% url 'register' %}">Crear cuenta</a></p>
+{% else %}
+    <p>Tu posición actual: {{ posicion }}</p>
+    <a href="{% url 'perfil' %}">Ver mi perfil</a>  
+{% endif %}
 {% endblock %}

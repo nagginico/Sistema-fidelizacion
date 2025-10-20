@@ -1,74 +1,60 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from ..models import Cliente
-from ..utils.helpers import obtener_top_100
 
-
-# --------------------------
-# FUNCIÓN AUXILIAR
-# --------------------------
-def obtener_cliente_y_rol(request):
-    """
-    Retorna el objeto Cliente asociado al usuario y su rol (es_playero).
-    Si no existe Cliente, lo crea automáticamente.
-    """
-    cliente, _ = Cliente.objects.get_or_create(
-        user=request.user,
-        defaults={
-            "dni": request.user.username,
-            "telefono": "",
-        },
-    )
-    return cliente, cliente.es_playero
-
-
-# --------------------------
-# PERFIL DEL CLIENTE
-# --------------------------
 @login_required
 def perfil(request):
-    cliente, es_playero = obtener_cliente_y_rol(request)
-    return render(request, "core/perfil.html", {
-        "cliente": cliente,
-        "es_playero": es_playero
-    })
+    """Vista del perfil del cliente o playero, permite editar datos personales."""
+    cliente = request.user.cliente
 
+    # Obtener posición del ranking
+    ranking = list(
+        Cliente.objects.order_by("-puntos").values_list("id", flat=True)
+    )
+    posicion = ranking.index(cliente.id) + 1 if cliente.id in ranking else "—"
 
-# --------------------------
-# VER PUNTOS
-# --------------------------
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from ..models import Cliente
+    if request.method == "POST":
+        nombre = request.POST.get("nombre", "").strip()
+        apellido = request.POST.get("apellido", "").strip()
+        telefono = request.POST.get("telefono", "").strip()
+        email = request.POST.get("email", "").strip()
 
-def inicio(request):
-    """Página principal con ranking y acceso según autenticación."""
-    # Obtener el top 10 de clientes ordenados por puntos
-    top_clientes = Cliente.objects.order_by("-puntos")[:10]
+        # Actualizar datos
+        cliente.telefono = telefono
+        cliente.save()
 
-    # Si el usuario está autenticado, mostrar sus puntos
-    cliente = None
-    if request.user.is_authenticated:
-        try:
-            cliente = request.user.cliente
-        except Cliente.DoesNotExist:
-            cliente = None
+        request.user.first_name = nombre
+        request.user.last_name = apellido
+        request.user.email = email
+        request.user.save()
+
+        messages.success(request, "Datos actualizados correctamente.")
+        return redirect("perfil")
 
     context = {
         "cliente": cliente,
-        "top_clientes": top_clientes,
+        "posicion": posicion,
     }
+    return render(request, "core/perfil.html", context)
 
+
+def inicio(request):
+    """Página principal visible para todos (logueados o no)."""
+    # Mostrar los primeros 10 del ranking
+    top_clientes = Cliente.objects.order_by('-puntos')[:10]
+    user_cliente = None
+    posicion = None
+
+    if request.user.is_authenticated:
+        user_cliente = getattr(request.user, "cliente", None)
+        if user_cliente:
+            ranking = list(Cliente.objects.order_by('-puntos').values_list('id', flat=True))
+            posicion = ranking.index(user_cliente.id) + 1 if user_cliente.id in ranking else None
+
+    context = {
+        "top_clientes": top_clientes,
+        "user_cliente": user_cliente,
+        "posicion": posicion,
+    }
     return render(request, "core/inicio.html", context)
-
-# --------------------------
-# TABLA TOP 100
-# --------------------------
-@login_required
-def tabla_puntos(request):
-    top_100 = obtener_top_100()
-    _, es_playero = obtener_cliente_y_rol(request)
-    return render(request, "core/tabla.html", {
-        "top_100": top_100,
-        "es_playero": es_playero
-    })
