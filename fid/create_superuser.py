@@ -5,7 +5,7 @@ User = get_user_model()
 
 username = "naggi"
 email = "nagginico@gmail.com"
-password = "44033699"
+password = 44033699
 
 try:
     if not User.objects.filter(username=username).exists():
