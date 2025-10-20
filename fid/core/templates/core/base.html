@@ -16,8 +16,6 @@
         {% if cliente.es_playero %}
             <li><a href="{% url 'panel_playero' %}">Ir al Panel del Playero</a></li>
         {% endif %}
-
-        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
     </ul>
 </section>
 
@@ -32,7 +30,6 @@
     </ul>
 {% endif %}
 
-<!-- CONTENIDO DE LAS PÁGINAS -->
 <main>
     {% block content %}
     {% endblock %}

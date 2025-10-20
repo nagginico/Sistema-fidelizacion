@@ -20,6 +20,7 @@
     <p><a href="{% url 'login' %}">Iniciar sesión</a> | <a href="{% url 'register' %}">Crear cuenta</a></p>
 {% else %}
     <p>Tu posición actual: {{ posicion }}</p>
-    <a href="{% url 'perfil' %}">Ver mi perfil</a>  
+    <a href="{% url 'perfil' %}">Ver mi perfil</a> 
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
 {% endif %}
 {% endblock %}

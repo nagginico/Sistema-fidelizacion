@@ -44,7 +44,7 @@
             {% for cliente in clientes %}
             <tr>
                 <td>{{ cliente.dni }}</td>
-                <td>{{ cliente.user.username|default:"-" }}</td>
+                <td>{{ cliente.user.username|default:"Sin usuario" }}</td>
                 <td>{{ cliente.telefono|default:"-" }}</td>
                 <td>{{ cliente.puntos }}</td>
                 <td>

@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-)16_$(oqjl-b7v+-!2ckohk35&7m1hl@iy6!z2=jw06-*&ze(('
 SECRET_KEY = os.environ.get("SECRET_KEY", "clave-insegura-local")
-DEBUG = os.environ.get("DEBUG", "True") == "True"
+DEBUG = True
+#DEBUG = os.environ.get("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"]
 
 #DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
