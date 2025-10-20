@@ -78,4 +78,4 @@ def cambiar_contrasena(request):
         form = PasswordChangeForm(request.user)
     
     # 🔹 No creamos nueva plantilla, renderizamos dentro del mismo perfil
-    return render(request, "perfil.html", {"form_cambio_pass": form})
+    return render(request, "core/perfil.html", {"form_cambio_pass": form})
