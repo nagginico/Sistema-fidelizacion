@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,17 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)16_$(oqjl-b7v+-!2ckohk35&7m1hl@iy6!z2=jw06-*&ze(('
-#Reemplazar para produccion
-#import os
-#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-...')  # REEMPLAZA en production
+#SECRET_KEY = 'django-insecure-)16_$(oqjl-b7v+-!2ckohk35&7m1hl@iy6!z2=jw06-*&ze(('
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'clave_insegura_local')
+
+
 #DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 # antes de producción exportar DJANGO_SECRET_KEY en las variables de entorno
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -84,12 +85,12 @@ WSGI_APPLICATION = 'fid.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600,
+        ssl_require=False
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -124,9 +125,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "core" / "static"]
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
