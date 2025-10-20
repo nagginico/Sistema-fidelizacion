@@ -23,7 +23,21 @@
 
     <button type="submit">Guardar cambios</button>
 </form>
+<hr>
+<h2>Cambiar contraseña</h2>
+<form method="POST" action="{% url 'cambiar_contrasena' %}">
+    {% csrf_token %}
+    <label for="old_password">Contraseña actual:</label><br>
+    <input type="password" name="old_password" required><br><br>
 
+    <label for="new_password1">Nueva contraseña:</label><br>
+    <input type="password" name="new_password1" required><br><br>
+
+    <label for="new_password2">Repetir nueva contraseña:</label><br>
+    <input type="password" name="new_password2" required><br><br>
+
+    <button type="submit">Actualizar contraseña</button>
+</form>
 <hr>
 
 <h3>Resumen</h3>

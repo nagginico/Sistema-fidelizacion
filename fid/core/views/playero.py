@@ -57,17 +57,23 @@ def panel_playero(request):
     query = request.GET.get("q", "").strip()
 
     if query:
-        clientes = (
+            clientes = (
             Cliente.objects
             .select_related("user")
             .filter(
                 Q(dni__icontains=query) |
                 Q(user__username__icontains=query)
             )
+            .filter(es_playero=False)  # 🔥 excluye playeros
             .order_by("dni")
         )
     else:
-        clientes = Cliente.objects.select_related("user").order_by("dni")
+        clientes = (
+                Cliente.objects
+            .select_related("user")
+            .filter(es_playero=False)  # 🔥 excluye playeros
+            .order_by("dni")
+         )
 
     if request.method == "POST":
         try:
@@ -88,9 +94,16 @@ def panel_playero(request):
                 mensaje = modificar_puntos(cliente, puntos, "restar", request.user)
                 messages.warning(request, mensaje)
 
+
             elif accion == "eliminar" and cliente:
-                cliente.delete()
-                messages.info(request, f"Cliente {cliente.dni} eliminado correctamente.")
+                if cliente.es_playero:
+                    messages.error(request, "No puedes eliminar a otro playero.")
+                else:
+                    cliente.delete()
+                    messages.info(request, f"Cliente {cliente.dni} eliminado correctamente.")
+
+
+
 
             elif accion == "agregar":
                 dni = request.POST.get("dni")
