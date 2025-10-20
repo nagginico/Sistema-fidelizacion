@@ -22,7 +22,7 @@ class CargaCombustible(models.Model):
     litros = models.DecimalField(max_digits=6, decimal_places=2)
     puntos_generados = models.IntegerField()
     fecha = models.DateTimeField(auto_now_add=True)
-    # quién hizo la carga, cliente - usuario
+    # quién hizo la carga si cliente o usuario
     cargado_por = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL, related_name="cargas_realizadas"
     )

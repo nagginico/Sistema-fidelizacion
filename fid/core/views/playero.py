@@ -45,8 +45,6 @@ def modificar_puntos(cliente, puntos, operacion, cargado_por):
 
 
 # --------------------------
-# PANEL DEL PLAYERO
-# --------------------------
 @login_required
 def panel_playero(request):
     """Vista principal del playero: búsqueda, suma/resta/eliminación."""

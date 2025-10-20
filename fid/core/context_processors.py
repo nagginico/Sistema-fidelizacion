@@ -1,8 +1,4 @@
 def es_playero(request):
-    """
-    Devuelve {'es_playero': True/False} para usar en templates.
-    Evita errores si user no está autenticado o no tiene cliente.
-    """
     if not request.user.is_authenticated:
         return {'es_playero': False}
     try:

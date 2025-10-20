@@ -6,9 +6,6 @@ from ..forms import RegistroClienteForm, LoginForm, CambioPasswordForm
 from ..models import Cliente
 from django.contrib.auth.forms import PasswordChangeForm
 
-
-# --------------------------
-# REGISTRO DE USUARIO
 # --------------------------
 def register(request):
     """Permite registrar un nuevo cliente."""
@@ -26,8 +23,7 @@ def register(request):
     return render(request, "core/registro.html", {"form": form})
 
 
-# --------------------------
-# LOGIN
+
 # --------------------------
 
 def login_view(request):
@@ -49,8 +45,7 @@ def login_view(request):
 
     return render(request, "core/login.html", {"form": form, "mensaje": mensaje})
 
-# --------------------------
-# LOGOUT
+
 # --------------------------
 @login_required
 def logout_view(request):
@@ -59,8 +54,7 @@ def logout_view(request):
     return redirect("login")
 
 
-# --------------------------
-# CAMBIO DE CONTRASEÑA
+
 # --------------------------
 
 @login_required
@@ -77,5 +71,4 @@ def cambiar_contrasena(request):
     else:
         form = PasswordChangeForm(request.user)
     
-    # 🔹 No creamos nueva plantilla, renderizamos dentro del mismo perfil
     return render(request, "core/perfil.html", {"form_cambio_pass": form})

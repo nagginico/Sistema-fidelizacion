@@ -3,8 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .models import Cliente
 
-# -------------------------------------------------
-# FORMULARIO DE REGISTRO DE CLIENTE
+
 # -------------------------------------------------
 from django import forms
 from django.contrib.auth.models import User
@@ -69,8 +68,7 @@ class RegistroClienteForm(forms.ModelForm):
 
 
 
-# -------------------------------------------------
-# FORMULARIO DE EDICIÓN SOLO PA PLAYEROS
+
 # -------------------------------------------------
 class PlayeroEditarClienteForm(forms.ModelForm):
     first_name = forms.CharField(required=False, label="Nombre")
@@ -100,16 +98,14 @@ class PlayeroEditarClienteForm(forms.ModelForm):
         return cliente
 
 
-# -------------------------------------------------
-# FORMULARIO DE LOGIN
+
 # -------------------------------------------------
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label="DNI")
     password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
 
 
-# -------------------------------------------------
-# FORMULARIO DE CAMBIO DE CONTRASEÑA ACTUALIZA DESPUES PARA MAS DATOS
+
 # -------------------------------------------------
 class CambioPasswordForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput, label="Contraseña actual")

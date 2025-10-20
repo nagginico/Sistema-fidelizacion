@@ -8,7 +8,6 @@ def perfil(request):
     """Vista del perfil del cliente o playero, permite editar datos personales."""
     cliente = request.user.cliente
 
-    # Obtener posición del ranking
     ranking = list(
         Cliente.objects.order_by("-puntos").values_list("id", flat=True)
     )
@@ -20,7 +19,7 @@ def perfil(request):
         telefono = request.POST.get("telefono", "").strip()
         email = request.POST.get("email", "").strip()
 
-        # Actualizar datos
+        
         cliente.telefono = telefono
         cliente.save()
 
@@ -41,7 +40,7 @@ def perfil(request):
 
 def inicio(request):
     """Página principal visible para todos (logueados o no)."""
-    # Mostrar los primeros 10 del ranking
+    
     top_clientes = Cliente.objects.filter(es_playero=False).order_by("-puntos")
 
     user_cliente = None
