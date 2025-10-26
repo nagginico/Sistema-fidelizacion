@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"] SECURITY WARNING: don't run with debug turned on in production!
+ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"]
 
 LOGOUT_REDIRECT_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"
