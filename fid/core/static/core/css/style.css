@@ -214,6 +214,7 @@ p strong {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     position: relative;
     margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .header-left {
@@ -415,7 +416,12 @@ p strong {
     letter-spacing: 1px;
 }
 
-.perfil{
+
+
+
+
+/* Formulario*/
+.perfil {
     background-color: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -426,48 +432,7 @@ p strong {
     margin-bottom: 40px;
 }
 
-/* Formulario */
-.perfil form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.perfil label {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #d1d1d1;
-}
-
-.perfil input {
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    padding: 10px 12px;
-    color: #fff;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.perfil input:focus {
-    border-color: #ffc21a;
-    background-color: rgba(255, 255, 255, 0.12);
-    outline: none;
-}
-
-
-/* Contraseña */
-.perfil-password {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 35px 40px;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
-}
-
-.perfil-password h2 {
+.perfil h2 {
     color: #ffc21a;
     margin-bottom: 25px;
     text-align: center;
@@ -486,7 +451,7 @@ p strong {
 /* Celulares*/
 @media (max-width: 400px) {
     .perfil-container {
-        padding: 25px 10px 40px;
+        padding: 25px 20px 40px;
     }
 
     .perfil-container h2 {
@@ -494,27 +459,11 @@ p strong {
         margin-bottom: 20px;
     }
 
-    .perfil, 
-    .perfil-password {
+    .perfil{
         padding: 20px 15px;
         border-radius: 10px;
         max-width: 100%;
         margin-bottom: 25px;
-    }
-
-    .perfil label {
-        font-size: 0.85rem;
-    }
-
-    .perfil input {
-        font-size: 0.9rem;
-        padding: 8px;
-    }
-
-    .perfil button {
-        font-size: 0.9rem;
-        padding: 10px;
-        border-radius: 5px;
     }
 
     .error-message {
