@@ -4,22 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Sistema de Fidelización{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+
 </head>
 <body>
 
 <header>
-    <h1>Estacion Servicio -</h1>
-
+    <!--<h1>Estacion Servicio -</h1>-->
 <section>
     <ul>
-        <a href="{% url 'inicio' %}">Inicio</a>
+        <!--<a href="{% url 'inicio' %}">Inicio</a>-->
         {% if cliente.es_playero %}
             <li><a href="{% url 'panel_playero' %}">Ir al Panel del Playero</a></li>
         {% endif %}
     </ul>
 </section>
 
-<hr>
+
+<!-- <hr> -->
 
 <!-- MENSAJES -->
 {% if messages %}
@@ -35,11 +38,12 @@
     {% endblock %}
 </main>
 
-<hr>
 
-<footer>
-    <p>Sistema de Fidelización - {{ now|date:"Y" }}</p>
+<!-- <hr> 
+
+<footer class="footer">
+    <p>Sistema de Fidelización  {{ now|date:"Y" }}</p>
 </footer>
-
+-->
 </body>
 </html>
