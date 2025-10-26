@@ -1,26 +1,69 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% block title %}Inicio{% endblock %}
 {% block content %}
-<h2>Ranking de Puntos</h2>
 
-<table border="1" cellpadding="5">
-    <tr><th>Posición</th><th>Usuario</th><th>Puntos</th></tr>
-    {% for c in top_clientes %}
-    <tr {% if user_cliente and c.id == user_cliente.id %}style="background:#dfd;"{% endif %}>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ c.user.username }}</td>
-        <td>{{ c.puntos }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="3">No hay clientes registrados.</td></tr>
-    {% endfor %}
-</table>
+<div class="inicio-container">
+    <header class="header">
+        <div class="header-left">
+             <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <span>Hola, {{ user.first_name|default:user.username }}</span>
+            <img src="{% static 'img/icon-hand.svg' %}" alt="Saludo" class="icon-hand">
+        </div>
+      <nav id="dropdownMenu" class="dropdown">
+            {% if user.is_authenticated %}
+                <a href="{% url 'perfil' %}">Ver mi perfil</a>
+                <a href="{% url 'logout' %}">Cerrar sesión</a>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+                <a href="{% url 'register' %}">Crear cuenta</a>
+            {% endif %}
+        </nav>
+    </header>
 
-{% if not user.is_authenticated %}
-    <p><a href="{% url 'login' %}">Iniciar sesión</a> | <a href="{% url 'register' %}">Crear cuenta</a></p>
-{% else %}
-    <p>Tu posición actual: {{ posicion }}</p>
-    <a href="{% url 'perfil' %}">Ver mi perfil</a> 
-    <a href="{% url 'logout' %}">Cerrar sesión</a>
-{% endif %}
+    <section class="score-container">
+        {% if user.is_authenticated %}
+        <div class="score-box">
+            <h3>Mis Puntos</h3>
+            <p>{{ puntos }}</p>
+        </div>
+        <div class="score-box">
+            <h3>Posición Actual</h3>
+            <div class="titulo-posicion">
+                <img src="{% static 'img/icon-cup.svg' %}" alt="Copa" class="icon-cup">
+                <p>{{ posicion }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <h2>Ranking de Puntos</h2>
+    
+    <section class="ranking">
+        <table class="ranking-table">
+            <thead>
+                <tr><th>Posición</th><th>Usuario</th><th>Puntos</th></tr>
+            </thead>
+            <tbody>
+                {% for c in top_clientes %}
+                <tr {% if user_cliente and c.id == user_cliente.id %}class="list"{% endif %}>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ c.user.username }}</td>
+                    <td>{{ c.puntos }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">No hay clientes registrados.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script>
+// Menú desplegable
+function toggleMenu() {
+    document.getElementById('dropdownMenu').classList.toggle('active');
+}
+
+</script>
 {% endblock %}

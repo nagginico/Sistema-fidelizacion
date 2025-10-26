@@ -4,28 +4,35 @@
 {% block title %}Iniciar sesión{% endblock %}
 
 {% block content %}
-<h2>Iniciar sesión</h2>
+<div class="login-c">
+    <div class="login-container">
+    <!-- Logo -->
+    <div class="login-logo">
+        <img src="{% static 'img/gas-station.svg' %}" alt="Logo estación">
+    </div>
 
-{% if mensaje %}
-    <p style="color: red;"><strong>{{ mensaje }}</strong></p>
-{% endif %}
+    <h2>Iniciar sesión</h2>
 
-<form method="POST" action="">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
+    {% if mensaje %}
+        <p class="alert-error"><strong>{{ mensaje }}</strong></p>
+    {% endif %}
 
-    <label for="id_username">DNI:</label>
-    {{ form.username }}
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
 
-    <label for="id_password">Contraseña:</label>
-    {{ form.password }}
+        <!--<label for="id_username">DNI</label>-->
+        {{ form.username }}
 
-    <button type="submit">Ingresar</button>
-</form>
+        <!--<label for="id_password">Contraseña</label>-->
+        {{ form.password }}
 
-<hr>
+        <button type="submit" class="btn">Ingresar</button>
+    </form>
 
-<p>¿No tenés cuenta?
-    <a href="{% url 'register' %}">Registrate aquí</a>.
-</p>
+    <p>¿No tenés cuenta?
+        <a href="{% url 'register' %}">Registrate aquí</a>.
+    </p>
+    </div>
+</div>
 {% endblock %}

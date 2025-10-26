@@ -2,21 +2,40 @@
 {% load static %}
 
 {% block content %} 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.dni.label_tag }} {{ form.dni }}
-    {{ form.telefono.label_tag }} {{ form.telefono }}
+<div class="login-c">
+<form method="POST" class="login-container">
 
+     <div class="login-logo">
+        <img src="{% static 'img/gas-station.svg' %}" alt="Logo estación">
+    </div>
+
+    <h2>Registrarse</h2>
+
+    {% csrf_token %}
+
+    <!-- {{ form.dni.label_tag }} -->
+    {{ form.dni }}
+
+    <!-- {{ form.telefono.label_tag }}  -->
+    {{ form.telefono }}
+
+    
     {% if form.password.errors %}
-        {{ form.password.label_tag }} {{ form.password }}
+        <!-- {{ form.password.label_tag }}  -->
+        {{ form.password }}
         {% for error in form.password.errors %}
-            <p style="color: red;">{{ error }}</p>
+            <p class="alert-error" style="color: red;">{{ error }}</p>
         {% endfor %}
     {% else %}
-        {{ form.password.label_tag }} {{ form.password }}
+        <!-- {{ form.password.label_tag }}  --> 
+        {{ form.password }}
     {% endif %}
 
-    <button type="submit">Registrar / Actualizar</button>
-</form>
+    <button type="submit" class="btn">Registrar / Actualizar</button>
 
+    <p>¿Ya tenés cuenta?
+        <a href="{% url 'login' %}">Iniciar Sesion</a>.
+    </p>
+</form>
+</div>
 {% endblock content %}

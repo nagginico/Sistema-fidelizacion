@@ -10,12 +10,29 @@ from django.contrib.auth.models import User
 from .models import Cliente
 
 class RegistroClienteForm(forms.ModelForm):
-    dni = forms.CharField(max_length=20, required=True, label="DNI")
-    telefono = forms.CharField(max_length=20, required=True, label="Teléfono")
+    dni = forms.CharField(
+        max_length=20, 
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'DNI',
+            'class': 'form-input'})
+        )
+    
+    telefono = forms.CharField(
+        max_length=20, 
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Teléfono',
+            'class': 'form-input'})
+        )
+    
     password = forms.CharField(
-        widget=forms.PasswordInput,
         required=False,
-        label="Contraseña (solo si ya tenés usuario)"
+        #label="Contraseña (solo si ya tenés usuario)::",
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña (solo si ya tenés usuario)',
+            'class': 'form-input'
+        })
     )
 
     class Meta:
@@ -101,10 +118,22 @@ class PlayeroEditarClienteForm(forms.ModelForm):
 
 # -------------------------------------------------
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label="DNI")
-    password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
-
-
+    username = forms.CharField(
+        label="DNI",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'DNI',
+            'id': 'id_username',
+            'class': 'form-input'
+        })
+    )
+    password = forms.CharField(
+        label="Contraseña",
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+            'id': 'id_password',
+            'class': 'form-input'
+        })
+    )
 
 # -------------------------------------------------
 class CambioPasswordForm(PasswordChangeForm):

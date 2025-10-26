@@ -2,75 +2,73 @@
 {% load static %}
 
 {% block content %}
-<h2>Panel del Playero</h2>
+<div class="panel-playero">
 
-<!-- BARRA DE BÚSQUEDA -->
-<form method="GET" action="">
+  <h2>Panel del Playero</h2>
+
+  <!-- BARRA DE BÚSQUEDA -->
+  <form method="GET" class="search-form">
     <input type="text" name="q" placeholder="Buscar por DNI o usuario" value="{{ query }}">
-    <button type="submit">Buscar</button>
-    <a href="{% url 'panel_playero' %}">Limpiar</a>
-</form>
+    <button type="submit" class="btn">Buscar</button>
+    <a href="{% url 'panel_playero' %}" class="btn-clear">Limpiar</a>
+  </form>
 
-<hr>
+  <!-- Agregar nuevo cliente -->
+  <section class="add-client">
+    <h3>Agregar nuevo cliente</h3>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="accion" value="agregar">
+      <input type="text" name="dni" placeholder="DNI" required>
+      <input type="text" name="telefono" placeholder="Teléfono">
+      <button type="submit" class="btn">Agregar</button>
+    </form>
+  </section>
 
-<!-- AGREGAR NUEVO CLIENTE -->
-<h3>Agregar nuevo cliente</h3>
-<form method="POST" action="">
-    {% csrf_token %}
-    <input type="hidden" name="accion" value="agregar">
-    <input type="text" name="dni" placeholder="DNI" required>
-    <input type="text" name="telefono" placeholder="Teléfono">
-    <button type="submit">Agregar</button>
-</form>
-
-<hr>
-
-<!-- LISTADO DE CLIENTES -->
-<h3>Clientes registrados</h3>
-
-{% if clientes %}
-    <table border="1" cellspacing="0" cellpadding="5">
-        <thead>
+  <!-- Listado de clientes -->
+  <section class="client-list">
+    <h3>Clientes registrados</h3>
+    {% if clientes %}
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
             <tr>
-                <th>DNI</th>
-                <th>Usuario</th>
-                <th>Teléfono</th>
-                <th>Puntos</th>
-                <th>Acciones</th>
+              <th>DNI</th>
+              <th>Usuario</th>
+              <th>Teléfono</th>
+              <th>Puntos</th>
+              <th>Acciones</th>
             </tr>
-        </thead>
-        
-        <tbody>
+          </thead>
+          <tbody>
             {% for cliente in clientes %}
             <tr>
-                <td>{{ cliente.dni }}</td>
-                <td>{{ cliente.user.username|default:"Sin usuario" }}</td>
-                <td>{{ cliente.telefono|default:"-" }}</td>
-                <td>{{ cliente.puntos }}</td>
-                <td>
-                    
-                    <!-- FORMULARIO DE SUMAR/RESTAR PUNTOS -->
-                    <form method="POST" style="display:inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
-                        <input type="number" name="puntos" min="1" placeholder="Pts" required>
-                        <button type="submit" name="accion" value="sumar">+</button>
-                        <button type="submit" name="accion" value="restar">-</button>
-                    </form>
-
-                    <!-- ELIMINAR CLIENTE -->
-                    <form method="POST" style="display:inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
-                        <button type="submit" name="accion" value="eliminar">Eliminar</button>
-                    </form>
-                </td>
+              <td>{{ cliente.dni }}</td>
+              <td>{{ cliente.user.username|default:"Sin usuario" }}</td>
+              <td>{{ cliente.telefono|default:"-" }}</td>
+              <td>{{ cliente.puntos }}</td>
+              <td>
+                <form method="POST" class="inline-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+                  <input type="number" name="puntos" min="1" placeholder="Pts" required>
+                  <button type="submit" name="accion" value="sumar" class="btn-sumar">+</button>
+                  <button type="submit" name="accion" value="restar" class="btn-restar">−</button>
+                </form>
+                <form method="POST" class="inline-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+                  <button type="submit" name="accion" value="eliminar" class="btn-eliminar">Eliminar</button>
+                </form>
+              </td>
             </tr>
             {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>No se encontraron clientes.</p>
-{% endif %}
-
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No se encontraron clientes.</p>
+    {% endif %}
+  </section>
+</div>
 {% endblock %}

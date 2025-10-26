@@ -3,52 +3,60 @@
 
 {% block title %}Mi perfil{% endblock %}
 
+17 / 5,000
+
 {% block content %}
-<h2>Mi perfil</h2>
+<div class="perfil-container">
 
-<form method="POST" action="">
-    {% csrf_token %}
+    <div class="perfil">
+        <h2>Mi Perfil</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <!--<label for="nombre">Nombre:</label> -->
+            <input type="text" placeholder="Nombre" id="nombre" name="nombre" value="{{ user.first_name }}">
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" value="{{ user.first_name }}">
+            <!--<label for="apellido">Apellido:</label> -->
+            <input type="text" placeholder="Apellido" id="apellido" name="apellido" value="{{ user.last_name }}">
 
-    <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" name="apellido" value="{{ user.last_name }}">
+            <!-- <label for="telefono">Teléfono:</label> -->
+            <input type="text" placeholder="Teléfono" id="telefono" name="telefono" value="{{ cliente.telefono }}">
 
-    <label for="telefono">Teléfono:</label>
-    <input type="text" id="telefono" name="telefono" value="{{ cliente.telefono }}">
+            <!--<label for="email">Email:</label> -->
+            <input type="email" placeholder="Email" id="email" name="email" value="{{ user.email }}">
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{ user.email }}">
-
-    <button type="submit">Guardar cambios</button>
-</form>
-<hr>
-<h2>Cambiar contraseña</h2>
-<form method="POST" action="{% url 'cambiar_contrasena' %}">
-    {% csrf_token %}
-    <label for="old_password">Contraseña actual:</label><br>
-    <input type="password" name="old_password" required><br><br>
-
-    <label for="new_password1">Nueva contraseña:</label><br>
-    <input type="password" name="new_password1" required><br><br>
-
-    <label for="new_password2">Repetir nueva contraseña:</label><br>
-    <input type="password" name="new_password2" required><br><br>
-
-    <button type="submit">Actualizar contraseña</button>
-</form>
-{% if form_cambio_pass.errors %}
-    <div style="color:red;">
-        {{ form_cambio_pass.errors }}
+            <button type="submit" class="btn">Guardar cambios</button>
+        </form>
     </div>
-{% endif %}
-<hr>
 
-<h3>Resumen</h3>
-<p><strong>Puntos acumulados:</strong> {{ cliente.puntos }}</p>
-<p><strong>Posición actual:</strong> {{ posicion }}</p>
+    <div class="perfil-password">
+        <h2>Cambiar Contraseña</h2>
+        <form method="POST" action="{% url 'cambiar_contrasena' %}">
+            {% csrf_token %}
+            <!--<label for="old_password">Contraseña actual:</label> -->
+            <input type="password" placeholder="Contraseña Actual" name="old_password" required>
 
-<hr>
+            <!--<label for="new_password1">Nueva contraseña:</label> -->
+            <input type="password" placeholder="Nueva Contraseña" name="new_password1" required>
 
+            <!--<label for="new_password2">Repetir nueva contraseña:</label> -->
+            <input type="password" placeholder="Repetir Nueva Contraseña" name="new_password2" required>
+
+            <button type="submit" class="btn">Actualizar Contraseña</button>
+        </form>
+
+        {% if form_cambio_pass.errors %}
+        <div class="error-message">
+            {{ form_cambio_pass.errors }}
+        </div>
+        {% endif %}
+    </div>
+    <!--<hr>
+    
+        <h3>Resumen</h3>
+        <p><strong>Puntos acumulados:</strong> {{ cliente.puntos }}</p>
+     <p><strong>Posición actual:</strong> {{ posicion }}</p>
+    
+    <hr>-->
+
+</div>
 {% endblock %}
