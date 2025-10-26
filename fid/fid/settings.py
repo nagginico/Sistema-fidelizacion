@@ -21,16 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)16_$(oqjl-b7v+-!2ckohk35&7m1hl@iy6!z2=jw06-*&ze(('
-#SECRET_KEY = os.environ.get("SECRET_KEY", "clave-insegura-local")
+#SECRET_KEY = 'django-insecure-)16_$(oqjl-b7v+-!2ckohk35&7m1hl@iy6!z2=jw06-*&ze(('
+SECRET_KEY = os.environ.get("SECRET_KEY", "clave-insegura-local")
 DEBUG = True
 #DEBUG = os.environ.get("DEBUG", "True") == "True"
-#ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"]
+
 #DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 # antes de producción exportar DJANGO_SECRET_KEY en las variables de entorno
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+ALLOWED_HOSTS = ["sistema-fidelizacion-9k8a.onrender.com", "localhost"] SECURITY WARNING: don't run with debug turned on in production!
 
 LOGOUT_REDIRECT_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"
