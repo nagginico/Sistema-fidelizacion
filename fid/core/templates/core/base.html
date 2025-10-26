@@ -14,7 +14,7 @@
     <!--<h1>Estacion Servicio -</h1>-->
 <section>
     <ul>
-        <!--<a href="{% url 'inicio' %}">Inicio</a>-->
+        <a href="{% url 'inicio' %}">Inicio</a>
         {% if cliente.es_playero %}
             <li><a href="{% url 'panel_playero' %}">Ir al Panel del Playero</a></li>
         {% endif %}
