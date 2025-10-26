@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 class LoginRequiredMiddleware:
-    """Redirige a login si el usuario no está autenticado y no está en una URL pública."""
+    """Redirige a login si el usuario no está autenticado y no está en una URL publica."""
     def __init__(self, get_response):
         self.get_response = get_response
 
