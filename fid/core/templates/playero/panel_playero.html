@@ -6,7 +6,29 @@
 
   <h2>Panel del Playero</h2>
 
-  <!-- BARRA DE BÚSQUEDA -->
+  <!--
+  
+  <form method="GET" class="search-form">
+    <input type="text" name="q" placeholder="Buscar por DNI o usuario" value="{{ query }}">
+    <button type="submit" class="btn">Buscar</button>
+    <a href="{% url 'panel_playero' %}" class="btn-clear">Limpiar</a>
+  </form>
+
+  <section class="add-client">
+    <h3>Agregar nuevo cliente</h3>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="accion" value="agregar">
+      <input type="text" name="dni" placeholder="DNI" required>
+      <input type="text" name="telefono" placeholder="Teléfono">
+      <button type="submit" class="btn">Agregar</button>
+    </form>
+  </section> 
+  --> 
+
+  <div class="playero-forms">
+  
+  <!-- Buscador -->
   <form method="GET" class="search-form">
     <input type="text" name="q" placeholder="Buscar por DNI o usuario" value="{{ query }}">
     <button type="submit" class="btn">Buscar</button>
@@ -24,6 +46,8 @@
       <button type="submit" class="btn">Agregar</button>
     </form>
   </section>
+
+</div>
 
   <!-- Listado de clientes -->
   <section class="client-list">

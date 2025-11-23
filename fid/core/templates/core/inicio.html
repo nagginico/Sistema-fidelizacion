@@ -4,26 +4,7 @@
 {% block content %}
 
 <div class="inicio-container">
-    <header class="header">
-        <div class="header-left">
-             <div class="menu-icon" onclick="toggleMenu()">☰</div>
-            <span>Hola, {{ user.first_name|default:user.username }}</span>
-            <img src="{% static 'core/css/img/hand-icon.svg' %}" alt="Saludo" class="icon-hand">
-        </div>
-      <nav id="dropdownMenu" class="dropdown">
-            {% if cliente.es_playero %}
-                <a href="{% url 'perfil' %}">Ver mi perfil</a>
-                <a href="{% url 'panel_playero' %}">Ir al Panel</a>
-                <a href="{% url 'logout' %}">Cerrar sesión</a>   
-            {% elif user.is_authenticated %}
-                <a href="{% url 'perfil' %}">Ver mi perfil</a>
-                <a href="{% url 'logout' %}">Cerrar sesión</a>
-            {% else %}
-                <a href="{% url 'login' %}">Iniciar sesión</a>
-                <a href="{% url 'register' %}">Crear cuenta</a>
-            {% endif %}
-        </nav>
-    </header>
+
 
     <section class="score-container">
         {% if user.is_authenticated %}
@@ -63,11 +44,5 @@
     </section>
 </div>
 
-<script>
-// Menú desplegable
-function toggleMenu() {
-    document.getElementById('dropdownMenu').classList.toggle('active');
-}
 
-</script>
 {% endblock %}

@@ -45,10 +45,14 @@ def inicio(request):
 
     user_cliente = None
     posicion = None
+    puntos = 0
+
 
     if request.user.is_authenticated:
         user_cliente = getattr(request.user, "cliente", None)
+        
         if user_cliente:
+            puntos = user_cliente.puntos or 0
             ranking = list(Cliente.objects.order_by('-puntos').values_list('id', flat=True))
             posicion = ranking.index(user_cliente.id) + 1 if user_cliente.id in ranking else None
 
@@ -56,5 +60,6 @@ def inicio(request):
         "top_clientes": top_clientes,
         "user_cliente": user_cliente,
         "posicion": posicion,
+        "puntos":puntos,
     }
     return render(request, "core/inicio.html", context)

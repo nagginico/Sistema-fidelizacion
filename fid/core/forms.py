@@ -37,7 +37,7 @@ class RegistroClienteForm(forms.ModelForm):
 
     class Meta:
         model = Cliente
-        fields = ["dni", "telefono"]
+        fields = ["dni", "telefono", "password"]
 
     def clean_dni(self):
         dni = self.cleaned_data["dni"]

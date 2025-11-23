@@ -15,6 +15,41 @@ body {
   box-sizing: border-box;
 }
 
+
+/* probando cierre*/
+.playero-forms {
+  display: flex;
+  gap: 30px;            /* separación entre formularios */
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.search-form,
+.add-client {
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;     /* ajustá a gusto */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-form input,
+.add-client input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn,
+.btn-clear {
+  margin-right: 5px;
+}
+/* probando cierre*/
+
+
+
+
+
 /* login-registro */
 .login-container {
   background-color: rgba(255, 255, 255, 0.05);
@@ -192,13 +227,11 @@ p strong {
     color: #ffc21a;
     font-size: 20px;
     width: 100%;
-    min-height: 100vh;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     background:#151515;
-    padding-bottom: 40px;
     box-sizing: border-box;
     font-family: 'Segoe UI', Arial, sans-serif;
 }
@@ -209,12 +242,12 @@ p strong {
     justify-content: space-between;
     align-items: center;
     background-color: #151515;
-    padding: 15px 20px;
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     position: relative;
     margin-top: 10px;
-    margin-bottom: 20px;
+   
 }
 
 .header-left {
